@@ -28,13 +28,13 @@ def extract_job(html):
     company = html.find("span", {"class": "companyName"}).string
     location = html.find("div", {"class": "companyLocation"}).string
     job_href = html["href"]
-    return {f"공고: {title} 모집회사: {company} 회사위치: {location} 모집링크: {job_href}"}
+    return {'공고': title, '모집회사': company, '회사위치': location, '모집링크': job_href}
 
 
 def extract_indeed_jobs(last_page):
     jobs = []
     for page in range(last_page):
-        print(f"Scrapping page {page}")
+        print(f"Scrapping Indeed page: {page+1}")
         result = requests.get(f"{URL}&start={page*LIMIT}")
         soup = BeautifulSoup(result.text, 'html.parser')
         results = soup.find_all("a", {"class": "tapItem"})
