@@ -1,7 +1,7 @@
 from indeed import get_jobs as get_indeed_jobs
 from stackof import get_jobs as get_stackof_jobs
 from save import save_to_file
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 
 app = Flask("Scrapper")
 
@@ -14,6 +14,10 @@ def home():
 @app.route("/report")
 def report():
     word = request.args.get('word')
+    if word:
+        word = word.lower()
+    else:
+        return redirect("/")
     return render_template("report.html", searchingBy=word)
 
 
